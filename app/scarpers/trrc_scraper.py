@@ -69,7 +69,7 @@ async def _scrape_trrc(scraping_state):
         logger.info("Starting scraping process...")
         async with async_playwright() as p:
             # Launch a browser
-            browser = await p.chromium.launch(headless=False)  # Set headless=False for debugging
+            browser = await p.chromium.launch(headless=True)  # Set headless=False for debugging
             page = await browser.new_page()
 
             # Navigate to the SWR-32 Public Query page
