@@ -1,5 +1,5 @@
 # Use an official Python runtime as a parent image
-FROM python:3.11-slim
+FROM python:3.11
 
 # Set the working directory
 WORKDIR /app
@@ -8,13 +8,12 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y \
     libgstreamer1.0-0 \
     libgstreamer-plugins-base1.0-0 \
-    libgstgl-1.0-0 \
-    libgstcodecparsers-1.0-0 \
     libavif15 \
     libenchant-2-2 \
     libsecret-1-0 \
     libmanette-0.2-0 \
-    libgles2
+    libgles2 \
+    && apt-get clean
 
 # Copy the requirements file into the container
 COPY requirements.txt .
