@@ -19,29 +19,26 @@ scraping_state = {
     "rows_scraped": 0,
 }
 
-async def _save_location(db, fv_district):
-    location = db.query(Location).filter(Location.name == fv_district).first()
-    if not location:
-        location = Location(name=fv_district, coordinates="0,0")
-        db.add(location)
-        db.commit()
-    return location
-
-async def _save_operator(db, operator_name):
-    operator = db.query(Operator).filter(Operator.name == operator_name).first()
-    if not operator:
-        operator = Operator(name=operator_name)
-        db.add(operator)
-        db.commit()
-    return operator
-
 async def save_flare_data(db, flare_data):
+    """Save flare data to the database using the provided session."""
     try:
         logger.info(f"Saving flare data: {flare_data}")
 
-        location = await _save_location(db, flare_data["fv_district"])
-        operator = await _save_operator(db, flare_data["operator_name"])
+        # Check if location already exists
+        location = db.query(Location).filter(Location.name == flare_data["fv_district"]).first()
+        if not location:
+            location = Location(name=flare_data["fv_district"], coordinates="0,0")
+            db.add(location)
+            db.commit()  # Commit the location immediately
 
+        # Check if operator already exists
+        operator = db.query(Operator).filter(Operator.name == flare_data["operator_name"]).first()
+        if not operator:
+            operator = Operator(name=flare_data["operator_name"])
+            db.add(operator)
+            db.commit()  # Commit the operator immediately
+
+        # Create flare entry
         flare = Flare(
             exception_number=flare_data["exception_number"],
             submittal_date=datetime.strptime(flare_data["submittal_date"], "%m/%d/%Y"),
@@ -58,12 +55,13 @@ async def save_flare_data(db, flare_data):
             operator_id=operator.id,
         )
         db.add(flare)
-        db.commit()
+        db.commit()  # Commit the flare immediately
         logger.info(f"Created new flare: {flare.id}")
     except Exception as e:
         db.rollback()
         logger.error(f"Error saving data to database: {e}")
         raise
+
 async def _scrape_trrc(scraping_state):
     db = SessionLocal()  # Create a single database session for the entire process
     browser = None
