@@ -1,5 +1,5 @@
 # Use an official Python runtime as a parent image
-FROM python:3.11-slim
+FROM python:3.11
 
 # Set the working directory
 WORKDIR /app
@@ -20,7 +20,6 @@ RUN apt-get update && apt-get install -y \
     libdrm2 \
     libxkbcommon0 \
     libasound2 \
-    libcups2 \  # Add this line
     && apt-get clean
 
 # Copy the requirements file into the container
