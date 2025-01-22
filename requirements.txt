@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+playwright
+beautifulsoup4
+sqlalchemy
+databases
+psycopg2-binary
+python-multipart
+pydantic
