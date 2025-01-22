@@ -21,7 +21,7 @@ logger = logging.getLogger(__name__)
 # Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # Allow requests from your Next.js frontend
+    allow_origins=["https://oil-gas-data-frontend.onrender.com"],  # Allow requests from your Next.js frontend
     allow_credentials=True,
     allow_methods=["*"],  # Allow all HTTP methods
     allow_headers=["*"],  # Allow all headers
