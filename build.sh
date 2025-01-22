@@ -11,7 +11,14 @@ sudo apt-get install -y \
     libsecret-1-0 \
     libmanette-0.2-0 \
     libgles2
-
+# Verify system dependencies
+ldconfig -p | grep libgstgl-1.0.so.0
+ldconfig -p | grep libgstcodecparsers-1.0.so.0
+ldconfig -p | grep libavif.so.15
+ldconfig -p | grep libenchant-2.so.2
+ldconfig -p | grep libsecret-1.so.0
+ldconfig -p | grep libmanette-0.2.so.0
+ldconfig -p | grep libGLESv2.so.2
 # Install Python dependencies
 pip install -r requirements.txt
 
