@@ -49,7 +49,7 @@ def stop_scrape():
     if not scraping_state["is_running"]:
         raise HTTPException(status_code=400, detail="Scraping is not running.")
 
-    scraping_state["is_running"] = False
+    scraping_state["is_running"] = False  # This should stop the scraping loop
     return {"message": "Scraping stopped."}
 
 @app.get("/api/v1/scraping-progress/")
